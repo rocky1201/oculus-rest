@@ -1,20 +1,7 @@
 
-#import <Cocoa/Cocoa.h>
-#import <Foundation/Foundation.h>
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdint.h>
-#include <microhttpd.h>
-#include <OVR.h>
+#import "oculus-rest.h"
 
 using namespace OVR;
-
-Ptr<DeviceManager> pManager = 0;
-Ptr<HMDDevice> pHMD = 0;
-Ptr<SensorDevice> pSensor = 0;
-SensorFusion FusionResult;
 
 static int ahc_echo(void * cls, struct MHD_Connection * connection, const char * url, const char * method, const char * version, const char * upload_data, size_t * upload_data_size, void ** ptr) {
 	static int dummy;
@@ -34,7 +21,7 @@ static int ahc_echo(void * cls, struct MHD_Connection * connection, const char *
 		return MHD_NO; /* upload data in a GET!? */
 	*ptr = NULL; /* clear context pointer */
 
-	Quatf q = FusionResult.GetOrientation();
+	Quatf q = pFusionResult->GetOrientation();
 	// Matrix4f bodyFrameMatrix(q); 
 	float yaw, pitch, roll;
 	q.GetEulerAngles<Axis_Y, Axis_X, Axis_Z>(&yaw, &pitch, &roll);
@@ -49,27 +36,41 @@ static int ahc_echo(void * cls, struct MHD_Connection * connection, const char *
 	return ret;
 }
 
+
+
 @interface OVRApp : NSApplication
 - (void) run;
 @end
 
 @implementation OVRApp
-- (void) run {
+
+- (void)run {
     NSLog(@"Hello!");
     
-	OVR::System::Init();
+    // Initialize Oculus Rift SDK
+    
+    // Initializes LibOVR.
+    System::Init();
+    
+    pFusionResult = new SensorFusion();
  	pManager = *DeviceManager::Create();
 	pHMD = *pManager->EnumerateDevices<HMDDevice>().CreateDevice();
-	if (!pHMD) {
-		printf("No HMD found.\n");
-		return;
+	
+    if (pHMD) {
+        InfoLoaded = pHMD->GetDeviceInfo(&Info);
+        pSensor  = *pHMD->GetSensor();
+		HMDInfo hmdInfo;
+        pHMD->GetDeviceInfo(&hmdInfo);
 	}
-	pSensor  = *pHMD->GetSensor();
-	HMDInfo hmdInfo;
-	pHMD->GetDeviceInfo(&hmdInfo);
+    else{
+        printf("No HMD found.\n");
+    }
+    
 	if (pSensor)
-		FusionResult.AttachToSensor(pSensor);
-	struct MHD_Daemon * d;
+		pFusionResult->AttachToSensor(pSensor);
+    
+
+   	struct MHD_Daemon * d;
 	d = MHD_start_daemon(MHD_USE_THREAD_PER_CONNECTION, 50000, NULL, NULL, &ahc_echo, NULL, MHD_OPTION_END);
 	if (d == NULL) {
 		printf("Unable to start webserver.\n");

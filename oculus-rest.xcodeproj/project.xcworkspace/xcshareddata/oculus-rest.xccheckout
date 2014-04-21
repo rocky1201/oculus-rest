@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8EC719CE-9D17-4FEC-A0A0-D542F020CCDA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>oculus-rest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C6B1FD89-588A-43CB-AA56-68A574F30911</key>
+		<string>https://github.com/rocky1201/oculus-rest.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>oculus-rest.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C6B1FD89-588A-43CB-AA56-68A574F30911</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/rocky1201/oculus-rest.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C6B1FD89-588A-43CB-AA56-68A574F30911</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C6B1FD89-588A-43CB-AA56-68A574F30911</string>
+			<key>IDESourceControlWCCName</key>
+			<string>oculus-rest</string>
+		</dict>
+	</array>
+</dict>
+</plist>
